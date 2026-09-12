@@ -183,17 +183,6 @@
           <Seam />
 
           {/* Submit CTA */}
-          <div className="pt-4">
-            <Button
-              variant="primary"
-              size="lg"
-              lead="+"
-              className="w-full sm:w-auto"
-              onClick={() => navigate('/submit')}
-            >
-              Submit achievement
-            </Button>
-          </div>
         </BoardPanel>
 
         {/* ON THE BOARD — verified feed */}
@@ -264,11 +253,6 @@
             <EmptyState
               headline="Nothing called in yet."
               body="Submit an achievement and it will appear here while a core member checks it."
-              action={
-                <Button variant="secondary" lead="+" onClick={() => navigate('/submit')}>
-                  Submit achievement
-                </Button>
-              }
             />
           ) : (
             <div>

@@ -72,7 +72,7 @@ export function RollCall() {
   const roster = useMemo(() => rosterQuery.data ?? [], [rosterQuery.data])
   const teamAvatars = useTeamAvatars()
   const alreadyPresent = useMemo(
-    () => new Set(roster.filter(r => r.present).map(r => r.id)),
+    () => new Set(roster.filter((r: any) => r.present).map((r: any) => r.id)),
     [roster],
   )
 
@@ -171,7 +171,7 @@ export function RollCall() {
     </div>
   )
 
-  const activeMeetup = meetupsQuery.data?.find(m => m.id === activeId) ?? null
+  const activeMeetup = meetupsQuery.data?.find((m: any) => m.id === activeId) ?? null
 
   return (
     <BoardLayout topbar={topbar}>
@@ -232,7 +232,7 @@ export function RollCall() {
           />
         ) : (
           <div>
-            {(meetupsQuery.data ?? []).map(m => {
+            {(meetupsQuery.data ?? []).map((m: any) => {
               const active = m.id === activeId
               return (
                 <SelectRow
@@ -288,7 +288,7 @@ export function RollCall() {
           ) : (
             <>
               <div className="max-h-[50vh] overflow-y-auto">
-                {roster.map(member => {
+                {roster.map((member: any) => {
                   const locked = member.present
                   const isChecked = locked || checked.has(member.id)
                   return (

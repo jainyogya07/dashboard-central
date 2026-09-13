@@ -84,14 +84,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(async ({ data }) => {
+    supabase.auth.getSession().then(async ({ data }: any) => {
       setSession(data.session)
       if (data.session) await fetchProfile(data.session.user.id)
       setLoading(false)
     })
 
     // Subscribe to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event: any, newSession: any) => {
       setSession(newSession)
       if (newSession) {
         await fetchProfile(newSession.user.id)

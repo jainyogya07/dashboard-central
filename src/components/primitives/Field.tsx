@@ -6,9 +6,9 @@ import { forwardRef } from 'react'
 import { TextButton } from './Controls'
 
 const CONTROL =
-  'w-full bg-transparent border-hair border-seam rounded-slot px-3 text-base text-chalk ' +
-  'placeholder-chalk/40 focus:outline-none focus:border-chalk/40 focus:shadow-ring ' +
-  'disabled:opacity-50 disabled:cursor-not-allowed'
+  'w-full bg-white border border-seam rounded-slot px-3 text-base text-chalk shadow-sm ' +
+  'placeholder-muted focus:outline-none focus:border-lamp focus:ring-1 focus:ring-lamp ' +
+  'disabled:opacity-50 disabled:bg-recess disabled:cursor-not-allowed'
 
 export function Field({
   label,

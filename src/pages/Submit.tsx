@@ -451,14 +451,14 @@ export function Submit() {
   const selectedId = watch('activity_id')
   const detailsValue = watch('details') ?? ''
   const selected = useMemo(
-    () => catalogQuery.data?.find(a => a.id === selectedId) ?? null,
+    () => catalogQuery.data?.find((a: any) => a.id === selectedId) ?? null,
     [catalogQuery.data, selectedId],
   )
 
   const grouped = useMemo(() => {
     const out: { key: string; heading: string; items: NonNullable<typeof catalogQuery.data> }[] = []
     for (const key of CATEGORY_ORDER) {
-      const items = (catalogQuery.data ?? []).filter(a => a.category === key)
+      const items = (catalogQuery.data ?? []).filter((a: any) => a.category === key)
       if (items.length) out.push({ key, heading: CATEGORY_HEADINGS[key] ?? key, items })
     }
     return out
@@ -669,7 +669,7 @@ export function Submit() {
                 <option value="">Pick one</option>
                 {grouped.map(group => (
                   <optgroup key={group.key} label={group.heading}>
-                    {group.items.map(item => (
+                    {group.items.map((item: any) => (
                       <option key={item.id} value={item.id}>
                         {item.label}{item.level ? ` — ${item.level}` : ''}
                       </option>

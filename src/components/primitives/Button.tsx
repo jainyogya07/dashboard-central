@@ -22,43 +22,36 @@ type Variant = 'primary' | 'secondary' | 'destructive' | 'quiet'
 type Size = 'sm' | 'md' | 'lg'
 
 const BASE =
-  'echo-host relative inline-flex items-center justify-center gap-2.5 rounded-pill border-hair ' +
-  'font-mono font-bold uppercase leading-none text-chalk ' +
-  'transition-[background-color,border-color,color,box-shadow,transform] duration-200 ' +
-  'active:translate-y-px disabled:opacity-40 disabled:cursor-not-allowed disabled:active:translate-y-0'
+  'relative inline-flex items-center justify-center gap-2 rounded-panel border ' +
+  'font-body font-medium leading-none ' +
+  'transition-all duration-200 ' +
+  'active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100'
 
 const SIZES: Record<Size, string> = {
-  sm: 'h-[34px] px-3.5 text-[10px] tracking-[0.18em]',
-  md: 'h-11 px-[22px] text-label',
-  lg: 'h-[52px] px-[30px] text-label',
+  sm: 'h-8 px-3 text-xs',
+  md: 'h-10 px-4 text-sm',
+  lg: 'h-12 px-6 text-base',
 }
 
-/**
- * Each variant owns its echo colour through --echo, so a destructive press
- * returns in warm red and never borrows the primary's rose.
- */
 const VARIANTS: Record<Variant, { className: string; echo: string }> = {
   primary: {
-    echo: '255 46 85',
+    echo: '37 99 235', // lamp (blue)
     className:
-      'border-lamp/40 bg-lamp/[0.06] shadow-glow ' +
-      'hover:enabled:border-lamp/[0.78] hover:enabled:bg-lamp/[0.12] hover:enabled:shadow-glow-lg',
+      'border-transparent bg-lamp text-white shadow-sm hover:enabled:bg-ember hover:enabled:shadow',
   },
   secondary: {
-    echo: '242 242 245',
+    echo: '209 213 219', // lip (gray)
     className:
-      'border-lip text-muted ' +
-      'hover:enabled:border-chalk hover:enabled:text-chalk hover:enabled:bg-chalk/[0.03]',
+      'border-seam bg-white text-chalk shadow-sm hover:enabled:border-lip hover:enabled:bg-recess',
   },
   destructive: {
-    echo: '255 92 56',
+    echo: '239 68 68', // flag (red)
     className:
-      'border-flag/45 bg-flag/[0.05] text-flare ' +
-      'hover:enabled:border-flag/85 hover:enabled:text-chalk hover:enabled:shadow-glow-danger',
+      'border-transparent bg-flag text-white shadow-sm hover:enabled:bg-flare hover:enabled:shadow',
   },
   quiet: {
-    echo: '242 242 245',
-    className: 'border-transparent text-muted hover:enabled:text-chalk hover:enabled:bg-chalk/[0.04]',
+    echo: '229 231 235', // seam (light gray)
+    className: 'border-transparent bg-transparent text-muted hover:enabled:text-chalk hover:enabled:bg-recess',
   },
 }
 

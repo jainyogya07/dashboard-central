@@ -17,6 +17,7 @@
  *         surroundings.
  */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     borderRadius: {
@@ -40,66 +41,91 @@ export default {
     screens: { sm: '480px', md: '768px', lg: '1024px', xl: '1280px' },
     extend: {
       colors: {
-        recess:   '#050507',  // the void — the page itself
-        enamel:   '#0B0B12',  // a surface, only where something must be held
-        lit:      '#12121B',  // raised, or hovered
-        seam:     '#23232E',  // hairline
-        lip:      '#34343F',  // lit hairline
+        // Apple Design System (DESIGN.md)
+        primary:          '#0066cc', // Action Blue
+        'primary-focus':  '#0071e3', // Focus Blue
+        'primary-on-dark':'#2997ff', // Sky Link Blue
+        
+        ink:              '#1d1d1f', // Near-Black Ink
+        body:             '#1d1d1f', // Body copy
+        'body-on-dark':   '#ffffff',
+        'body-muted':     '#cccccc',
+        'ink-muted-80':   '#333333',
+        'ink-muted-48':   '#7a7a7a',
 
-        chalk:    '#F2F2F5',  // text
-        muted:    '#7C7C8A',  // secondary text
-        dim:      '#4A4A57',  // tertiary, disabled, scroll hints
-        graphite: '#050507',  // text on a solid fill
+        canvas:           '#ffffff', // Pure white
+        parchment:        '#f5f5f7', // Signature Apple off-white
+        pearl:            '#fafafc', // Pearl button surface
+        hairline:         '#e0e0e0', // 1px hairline border
+        'divider-soft':   '#f0f0f0',
 
-        lamp:     '#FF2E55',  // signal — the one accent, reserved for action
-        ember:    '#7E1128',  // signal, dimmed to a resting state
-        cyan:     '#35D6FF',  // aberration, information, "sent back"
-        posted:   '#3BE8A6',  // verified
-        amber:    '#FFC24D',  // in the queue
-        flag:     '#FF5C38',  // destructive
-        flare:    '#FF8A6B',  // error text
+        'surface-tile-1': '#272729', // Near-Black Tile 1
+        'surface-tile-2': '#2a2a2c',
+        'surface-tile-3': '#252527',
+        'surface-black':  '#000000', // Pure black (global nav)
+
+        // Legacy semantic mappings mapped to Apple tokens
+        recess:           '#f5f5f7',
+        enamel:           '#ffffff',
+        lit:              '#fafafc',
+        seam:             '#e0e0e0',
+        lip:              '#d2d2d7',
+        chalk:            '#1d1d1f',
+        muted:            '#7a7a7a',
+        dim:              '#9a9a9a',
+        lamp:             '#0066cc',
+        ember:            '#0071e3',
+        posted:           '#34c759', // Apple Green
+        amber:            '#ff9500', // Apple Orange
+        flare:            '#ff3b30', // Apple Red
+      },
+      boxShadow: {
+        none: 'none',
+        // Apple's signature single drop-shadow reserved for imagery/elevated surfaces
+        'apple-product': '0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
+        'apple-subtle': '0 2px 8px rgba(0, 0, 0, 0.04)',
       },
       fontFamily: {
-        display: ['Archivo', 'system-ui', 'sans-serif'],
-        body: ['"Instrument Sans"', 'system-ui', 'sans-serif'],
-        // Instrumentation voice: labels, buttons, status readings, timestamps.
-        mono: ['"Martian Mono"', 'ui-monospace', 'monospace'],
+        display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"SF Mono"', '"Martian Mono"', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        label: ['11px', { lineHeight: '1', letterSpacing: '0.22em' }],
-        xs:    ['13px', { lineHeight: '1.45' }],
-        base:  ['16px', { lineHeight: '1.55' }],
-        lg:    ['20px', { lineHeight: '1.35' }],
-        xl:    ['25px', { lineHeight: '1.25' }],
-        '2xl': ['31px', { lineHeight: '1.15' }],
-        '3xl': ['39px', { lineHeight: '1.10' }],
-        board: ['clamp(64px, 13vw, 116px)', { lineHeight: '0.90', letterSpacing: '-0.01em' }],
-        hero:  ['clamp(64px, 17.5vw, 168px)', { lineHeight: '0.86', letterSpacing: '0.01em' }],
+        'hero-display': ['56px', { lineHeight: '1.07', letterSpacing: '-0.28px', fontWeight: '600' }],
+        'display-lg':   ['40px', { lineHeight: '1.10', letterSpacing: '0px', fontWeight: '600' }],
+        'display-md':   ['34px', { lineHeight: '1.47', letterSpacing: '-0.374px', fontWeight: '600' }],
+        lead:           ['28px', { lineHeight: '1.14', letterSpacing: '0.196px', fontWeight: '400' }],
+        tagline:        ['21px', { lineHeight: '1.19', letterSpacing: '0.231px', fontWeight: '600' }],
+        body:           ['17px', { lineHeight: '1.47', letterSpacing: '-0.374px', fontWeight: '400' }],
+        'body-strong':  ['17px', { lineHeight: '1.24', letterSpacing: '-0.374px', fontWeight: '600' }],
+        caption:        ['14px', { lineHeight: '1.43', letterSpacing: '-0.224px', fontWeight: '400' }],
+        'caption-strong':['14px', { lineHeight: '1.29', letterSpacing: '-0.224px', fontWeight: '600' }],
+        'fine-print':   ['12px', { lineHeight: '1.0', letterSpacing: '-0.12px', fontWeight: '400' }],
+        'nav-link':     ['12px', { lineHeight: '1.0', letterSpacing: '-0.12px', fontWeight: '400' }],
       },
-      spacing: { gutter: '16px', panel: '22px', row: '64px', stack: '32px' },
-      maxWidth: { board: '720px', form: '640px', booth: '1120px' },
-      borderWidth: { hair: '1px', inset: '1px' },
-      letterSpacing: { sign: '0.08em', label: '0.22em' },
-      zIndex: { header: '40', scrim: '50', drawer: '55', toast: '60', dialog: '70' },
-      transitionDuration: { echo: '600ms' },
-      keyframes: {
-        slotIn: {
-          '0%':   { transform: 'translateY(-8px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)',    opacity: '1' },
-        },
-        signalPulse: {
-          '0%, 100%': { opacity: '0.35' },
-          '50%':      { opacity: '1' },
-        },
-        scanRoll: {
-          from: { backgroundPositionY: '0' },
-          to:   { backgroundPositionY: '-60px' },
-        },
+      borderRadius: {
+        none: '0px',
+        xs:   '5px',
+        sm:   '8px',
+        md:   '11px',
+        lg:   '18px', // Apple store utility card radius
+        pill: '9999px',
+        full: '9999px',
       },
-      animation: {
-        slotIn: 'slotIn 260ms ease-out',
-        signal: 'signalPulse 2.4s ease-in-out infinite',
-        scan: 'scanRoll 9s linear infinite',
+      spacing: {
+        xxs: '4px',
+        xs:  '8px',
+        sm:  '12px',
+        md:  '17px',
+        lg:  '24px',
+        xl:  '32px',
+        xxl: '48px',
+        section: '80px',
+      },
+      maxWidth: {
+        container: '1020px',
+        gallery:   '1280px',
+        board:     '1020px',
       },
     },
   },

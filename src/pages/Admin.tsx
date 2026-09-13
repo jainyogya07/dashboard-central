@@ -215,7 +215,7 @@ export function Admin() {
           />
         ) : (
           <div>
-            {roster.map(m => (
+            {roster.map((m: any) => (
               <div
                 key={m.id}
                 className={`px-4 py-3 border-b border-seam flex flex-wrap items-center gap-x-4 gap-y-2
@@ -355,7 +355,7 @@ export function Admin() {
           />
         ) : (
           <div>
-            {(auditQuery.data ?? []).map(row => (
+            {(auditQuery.data ?? []).map((row: any) => (
               <div key={row.id} className="px-4 py-2 border-b border-seam flex items-baseline gap-4">
                 <span className="text-sm text-chalk flex-1 truncate">
                   {row.actor_name ?? 'System'} — {row.action} on {row.entity}

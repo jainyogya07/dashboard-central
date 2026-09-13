@@ -52,8 +52,9 @@ export function ProofViewer({ submissionId }: { submissionId: string }) {
 
       const rows = data ?? []
       const signed = await Promise.all(
-        rows.map(async row => {
+        rows.map(async (row: any) => {
           const { data: link } = await supabase.storage
+
             .from('proofs')
             .createSignedUrl(row.storage_path, TTL_SECONDS)
           return { ...row, url: link?.signedUrl ?? '' }

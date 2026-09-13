@@ -87,7 +87,7 @@ export function Export() {
   const payloadQuery = useQuery({
     queryKey: ['aarvak-export', applied],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke<ExportPayload>('aarvak-export', {
+      const { data, error } = await (supabase.functions as any).invoke('aarvak-export', {
         body: applied ? { since: applied } : {},
       })
       if (error) throw error

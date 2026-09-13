@@ -57,3 +57,13 @@ ECHO_SUPABASE_MANUAL_SETUP.md
 ANTIGRAVITY_BUILD_PROMPT.md
 
 .agents/
+
+# Design & raw reference assets
+DESIGN*.md
+*.pdf
+*WhatsApp*.jpeg
+*Byte Brigade*.jpg
+*potato bite*.jpg
+*cipher logo*.png
+*echo logo*.png
+

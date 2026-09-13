@@ -45,7 +45,7 @@
     return new Intl.NumberFormat('en-US').format(n)
   }
 
-  export function Board() {
+  export function Board({ hardcodedTeamId }: { hardcodedTeamId?: string } = {}) {
     const { session, profile, role } = useAuth()
     const navigate = useNavigate()
     const queryClient = useQueryClient()

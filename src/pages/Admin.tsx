@@ -154,8 +154,8 @@ export function Admin() {
   const topbar = (
     <div className="flex items-center justify-between w-full gap-4">
       <div className="flex items-baseline gap-3 min-w-0">
-        <span className="font-display font-bold text-xl text-chalk tracking-sign uppercase">ECHO</span>
-        <span className="text-sm text-chalk/60 truncate">Admin</span>
+        <span className="font-display font-bold text-xl text-chalk tracking-sign uppercase">AARVAK</span>
+        <span className="text-sm text-chalk/60 truncate">Control centre</span>
       </div>
       <div className="flex items-center gap-4 shrink-0">
         <TextButton
@@ -178,7 +178,19 @@ export function Admin() {
   )
 
   return (
-    <BoardLayout topbar={topbar}>
+    <BoardLayout variant="corporate" topbar={topbar}>
+      <div className="corporate-section-heading">
+        <span className="corporate-eyebrow">Administration / Access</span>
+        <h1 className="corporate-title">Team control centre</h1>
+        <p className="corporate-subtitle">Manage the roster, sprint window, and the audit trail from one place.</p>
+      </div>
+
+      <div className="corporate-stat-grid">
+        <div className="corporate-stat"><span>Active members</span><strong>{roster.filter((member: any) => member.is_active).length}</strong></div>
+        <div className="corporate-stat"><span>Total roster</span><strong>{roster.length}</strong></div>
+        <div className="corporate-stat"><span>Audit entries</span><strong>{auditQuery.data?.length ?? 0}</strong></div>
+      </div>
+
       {(error || notice) && (
         <div className={`text-sm rounded-slot px-3 py-2 border-hair
           ${error ? 'text-flare border-flag' : 'text-posted border-seam'}`}>

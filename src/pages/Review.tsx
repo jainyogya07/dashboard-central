@@ -220,8 +220,8 @@ export function Review() {
   const topbar = (
     <div className="flex items-center justify-between w-full gap-4">
       <div className="flex items-baseline gap-3 min-w-0">
-        <span className="font-display font-bold text-xl text-chalk tracking-sign uppercase">ECHO</span>
-        <span className="text-sm text-chalk/60 truncate">The Booth</span>
+        <span className="font-display font-bold text-xl text-chalk tracking-sign uppercase">AARVAK</span>
+        <span className="text-sm text-chalk/60 truncate">Verification desk</span>
       </div>
       <div className="flex items-center gap-4 shrink-0">
         <span className="text-sm text-chalk/60">
@@ -245,7 +245,12 @@ export function Review() {
   )
 
   const tabs = (
-    <div className="flex items-center">
+    <div className="corporate-section-heading flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <span className="corporate-eyebrow">Operations / Review</span>
+        <h1 className="corporate-title">Submission review</h1>
+        <p className="corporate-subtitle">Inspect evidence, make a decision, and keep the board accurate.</p>
+      </div>
       <Segmented
         label="Queue view"
         value={tab}
@@ -260,7 +265,7 @@ export function Review() {
 
   if (tab === 'posted') {
     return (
-      <BoardLayout topbar={topbar}>
+      <BoardLayout variant="corporate" topbar={topbar}>
         {tabs}
         <PostedPanel canRevoke={role === 'core' || role === 'lead'} />
       </BoardLayout>
@@ -269,7 +274,7 @@ export function Review() {
 
   if (queueQuery.isLoading) {
     return (
-      <BoardLayout topbar={topbar}>
+      <BoardLayout variant="corporate" topbar={topbar}>
         <BoardPanel>
           <div className="flex flex-col gap-4">
             {[...Array(4)].map((_, i) => <Skeleton key={i} variant="row" />)}
@@ -281,7 +286,7 @@ export function Review() {
 
   if (queueQuery.isError) {
     return (
-      <BoardLayout topbar={topbar}>
+      <BoardLayout variant="corporate" topbar={topbar}>
         <BoardPanel>
           <ErrorState
             headline="Could not open the queue"
@@ -294,7 +299,7 @@ export function Review() {
   }
 
   return (
-    <BoardLayout topbar={topbar}>
+    <BoardLayout variant="corporate" topbar={topbar}>
       {tabs}
       {queue.length === 0 ? (
         <BoardPanel>

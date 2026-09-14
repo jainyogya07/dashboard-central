@@ -29,7 +29,7 @@ export function TextButton({
 }) {
   const { emit, rings } = useEcho()
   const tones = {
-    default: 'text-muted hover:enabled:text-chalk hover:enabled:bg-chalk/[0.04]',
+    default: 'text-muted hover:enabled:text-chalk hover:enabled:bg-chalk/[0.04] ',
     signal: 'text-lamp/85 hover:enabled:text-lamp hover:enabled:bg-lamp/[0.06]',
   }
 

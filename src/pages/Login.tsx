@@ -31,8 +31,9 @@
  */
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
+import { useAuth } from '../context/AuthContext'
 import { PlainLayout } from '../components/layout/PlainLayout'
 import { BoardPanel } from '../components/board/BoardPanel'
 import { Field, Input } from '../components/primitives/Field'
@@ -77,6 +78,14 @@ type Stage = 'form' | 'check-email'
 
 export function Login() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const { session } = useAuth()
+
+  useEffect(() => {
+    if (session) {
+      navigate('/', { replace: true })
+    }
+  }, [session, navigate])
 
   const [mode, setMode] = useState<Mode>('signin')
   const [stage, setStage] = useState<Stage>('form')

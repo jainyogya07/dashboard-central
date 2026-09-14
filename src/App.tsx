@@ -99,11 +99,9 @@ export function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/onboarding" element={<RequireAuth><Onboarding /></RequireAuth>} />
               
-              <Route path="/" element={<RequireProfile><Central /></RequireProfile>} />
-              <Route path="/submit" element={<RequireProfile><Submit /></RequireProfile>} />
-              <Route path="/profile" element={<RequireProfile><Profile /></RequireProfile>} />
-              <Route path="/board" element={<RequireProfile><Board /></RequireProfile>} />
-              <Route path="/rollcall" element={<RequireProfile><RollCall /></RequireProfile>} />
+              {/* Public Sprint Scoreboards — Accessible immediately without login */}
+              <Route path="/" element={<Central />} />
+              <Route path="/board" element={<Board />} />
               
               {TEAMS.map((team) => {
                 const slug = team.name.toLowerCase().replace(' ', '-')
@@ -111,11 +109,17 @@ export function App() {
                   <Route 
                     key={team.id} 
                     path={`/${slug}`} 
-                    element={<RequireProfile><CentralTeam hardcodedTeamId={team.id} /></RequireProfile>} 
+                    element={<CentralTeam hardcodedTeamId={team.id} />} 
                   />
                 )
               })}
 
+              {/* Protected Engineering Actions — Require Authentication */}
+              <Route path="/submit" element={<RequireProfile><Submit /></RequireProfile>} />
+              <Route path="/profile" element={<RequireProfile><Profile /></RequireProfile>} />
+              <Route path="/rollcall" element={<RequireProfile><RollCall /></RequireProfile>} />
+
+              {/* Lead & Core Role Routes */}
               <Route path="/review" element={<RequireRole minRole="core"><Review /></RequireRole>} />
               <Route path="/admin" element={<RequireRole minRole="lead"><Admin /></RequireRole>} />
               <Route path="/export" element={<RequireRole minRole="lead"><Export /></RequireRole>} />

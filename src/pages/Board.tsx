@@ -1199,12 +1199,14 @@ export function Board({ hardcodedTeamId }: { hardcodedTeamId?: string }) {
                   </div>
                   <div>
                     <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-[#1d1d1f]'}`}>
-                      No deliverables match your search
+                      {feed.length === 0 ? `No deliverables logged yet for ${currentTeam.name}` : 'No deliverables match your search'}
                     </h3>
                     <p className="text-xs max-w-md mt-1">
-                      {historySearch 
-                        ? `No results found for "${historySearch}". Check the spelling or try searching by engineer name or department.`
-                        : 'No submissions found under the selected filters.'}
+                      {feed.length === 0
+                        ? 'The sprint has started with a clean zero baseline. Submit achievements via /submit to log milestone deliverables.'
+                        : historySearch 
+                          ? `No results found for "${historySearch}". Check the spelling or try searching by engineer name or department.`
+                          : 'No submissions found under the selected filters.'}
                     </p>
                   </div>
                   {isFilterActive && (

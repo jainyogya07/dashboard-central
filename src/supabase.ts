@@ -13,14 +13,18 @@ function save(key: string, val: any) {
 }
 
 // Ensure clean migration to authentic TSJ 2026 PDF data (no arbitrary points or fake names)
-const SEED_VERSION = 'tsj_2026_pdf_v5_clean'
-if (localStorage.getItem('mock_seed_version') !== SEED_VERSION) {
-  localStorage.removeItem('mock_users')
-  localStorage.removeItem('mock_profiles')
-  localStorage.removeItem('mock_submissions')
-  localStorage.removeItem('mock_submission_proofs')
-  localStorage.removeItem('mock_session')
-  localStorage.setItem('mock_seed_version', SEED_VERSION)
+const SEED_VERSION = 'tsj_2026_zero_clean_v8'
+if (typeof window !== 'undefined') {
+  try {
+    if (localStorage.getItem('mock_seed_version') !== SEED_VERSION) {
+      localStorage.removeItem('mock_users')
+      localStorage.removeItem('mock_profiles')
+      localStorage.removeItem('mock_submissions')
+      localStorage.removeItem('mock_submission_proofs')
+      localStorage.removeItem('mock_session')
+      localStorage.setItem('mock_seed_version', SEED_VERSION)
+    }
+  } catch {}
 }
 
 let session = load('mock_session', null as any)
@@ -28,7 +32,6 @@ const users = load('mock_users', [] as any[])
 const profiles = load('mock_profiles', [] as any[])
 let submissions = load('mock_submissions', [] as any[])
 let submission_proofs = load('mock_submission_proofs', [] as any[])
-
 
 // Find team ASCEND for user Yogay Jain
 const ascendTeam = TEAMS.find(t => t.name === 'ASCEND') || TEAMS[0]
@@ -78,9 +81,69 @@ if (profiles.length === 0) {
   save('mock_profiles', profiles)
 }
 
+// Official Activities Catalog from Tech Sprint
+export const ACTIVITIES = [
+  {
+    id: 'act-sprint-track',
+    code: 'ST_PROD',
+    category: 'sprint_track',
+    scope: 'team',
+    label: 'Technical Sprint Deliverable',
+    level: 'Production Gold',
+    points: 100,
+    is_variable: false,
+    requires_proof: true,
+    proof_hint: 'GitHub PR link or deployment URL',
+    is_active: true,
+    sort_order: 1
+  },
+  {
+    id: 'act-architecture',
+    code: 'ARCH_RFC',
+    category: 'team_activity',
+    scope: 'team',
+    label: 'Architecture RFC & System Design',
+    level: 'Architecture',
+    points: 150,
+    is_variable: false,
+    requires_proof: true,
+    proof_hint: 'Architecture diagram or design doc link',
+    is_active: true,
+    sort_order: 2
+  },
+  {
+    id: 'act-code-review',
+    code: 'CR_BENCH',
+    category: 'individual',
+    scope: 'individual',
+    label: 'Code Review & Benchmark Run',
+    level: 'Engineering',
+    points: 50,
+    is_variable: false,
+    requires_proof: true,
+    proof_hint: 'Benchmark report or PR review URL',
+    is_active: true,
+    sort_order: 3
+  },
+  {
+    id: 'act-demo-day',
+    code: 'DEMO_BONUS',
+    category: 'bonus',
+    scope: 'team',
+    label: 'Demo Day Showcase & Win',
+    level: 'Excellence',
+    points: 200,
+    is_variable: false,
+    requires_proof: true,
+    proof_hint: 'Presentation slides or live demo link',
+    is_active: true,
+    sort_order: 4
+  }
+]
+
 // 75 Days Sprint Config from Tech Sprint Journey PDF (TSJ / 2026)
 const sprint_config = { 
-  sprint_start: new Date(Date.now() - 4 * 86400 * 1000).toISOString(), 
+  sprint_start: new Date().toISOString(), 
   total_days: SPRINT_INFO.totalDays // 75 Days
 }
 
@@ -256,6 +319,7 @@ class QueryBuilder {
     if (this.table === 'submissions') rows = submissions
     if (this.table === 'submission_proofs') rows = submission_proofs
     if (this.table === 'sprint_config') rows = [sprint_config]
+    if (this.table === 'activity_catalog') rows = ACTIVITIES
     
     let limitNum: number | null = null
     for (const f of this.filters) {
@@ -286,10 +350,21 @@ class QueryBuilder {
   }
 }
 
+export function resetToZeroState() {
+  submissions.length = 0
+  submission_proofs.length = 0
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('mock_submissions')
+    localStorage.removeItem('mock_submission_proofs')
+    window.dispatchEvent(new CustomEvent('aarvak-realtime-update', { detail: { table: 'submissions', event: 'DELETE' } }))
+  }
+}
+
 export const supabase = {
   auth,
   from: (table: string) => new QueryBuilder(table),
   notifyRealtime,
+  resetToZeroState,
   functions: {
     invoke: async <T = any>(fn: string, opts?: any): Promise<{ data: T | null; error: any }> => {
       return { data: null, error: null }
@@ -311,6 +386,55 @@ export const supabase = {
     const userProfile = profiles.find(p => p.id === currentUser?.id)
     const teamId = userProfile?.team_id || TEAMS[0].id
     const teamSubs = submissions.filter(s => s.team_id === teamId && s.status === 'verified')
+
+    if (fn === 'submit_achievement' || fn === 'resubmit_submission') {
+      const act = ACTIVITIES.find(a => a.id === args?.p_activity_id) || ACTIVITIES[0]
+      const pts = act.points || 50
+      const subId = args?.p_id || crypto.randomUUID()
+      const newSub = {
+        id: subId,
+        team_id: teamId,
+        member_id: currentUser?.id || 'user-yogay-jain',
+        activity_id: act.id,
+        title: args?.p_title || act.label,
+        description: args?.p_details || args?.p_title || act.label,
+        details: args?.p_details,
+        external_url: args?.p_external_url,
+        status: 'verified',
+        net_points: pts,
+        awarded_points: pts,
+        penalty_points: 0,
+        activity_catalog: act,
+        submitted_at: args?.p_occurred_on || new Date().toISOString(),
+        decided_at: new Date().toISOString(),
+        created_at: new Date().toISOString()
+      }
+      
+      const existingIdx = submissions.findIndex(s => s.id === subId)
+      if (existingIdx >= 0) {
+        submissions[existingIdx] = newSub
+      } else {
+        submissions.unshift(newSub)
+      }
+      save('mock_submissions', submissions)
+
+      if (args?.p_proofs && Array.isArray(args.p_proofs)) {
+        const proofs = args.p_proofs.map((pr: any) => ({
+          id: crypto.randomUUID(),
+          submission_id: subId,
+          team_id: teamId,
+          storage_path: pr.storage_path || '',
+          file_name: pr.file_name || 'Proof Attachment',
+          size_bytes: pr.size_bytes || 1024,
+          created_at: new Date().toISOString()
+        }))
+        submission_proofs.push(...proofs)
+        save('mock_submission_proofs', submission_proofs)
+      }
+
+      notifyRealtime('submissions', 'INSERT', newSub)
+      return { data: subId, error: null }
+    }
 
     if (fn === 'get_team_total') {
       // Points come strictly from verified submissions (0 if none)

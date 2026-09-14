@@ -43,8 +43,9 @@ export function PodiumCard({ team, maxPoints, onInspect }: PodiumCardProps) {
     team.team_name === 'ECHO' ? 'Realtime Engine' : 'Fullstack Core'
   )
 
-  const streak = team.streak ?? (isFirst ? 5 : isSecond ? 3 : 2)
-  const velocity = team.velocity ?? (isFirst ? '+34%' : isSecond ? '+22%' : '+18%')
+  const hasPoints = team.total_points > 0
+  const streak = team.streak ?? (hasPoints ? (isFirst ? 5 : isSecond ? 3 : 2) : 0)
+  const velocity = team.velocity ?? (hasPoints ? (isFirst ? '+34%' : isSecond ? '+22%' : '+18%') : '0%')
   const memberCount = team.memberCount ?? 4
 
   if (isFirst) {
@@ -117,7 +118,7 @@ export function PodiumCard({ team, maxPoints, onInspect }: PodiumCardProps) {
             </div>
             <div className="text-right">
               <span className="text-[11px] font-medium text-purple-600 bg-purple-50 px-2 py-1 rounded-md border border-purple-200/50">
-                Sprint Leader
+                {hasPoints ? 'Sprint Leader' : 'Starting Line'}
               </span>
             </div>
           </div>
@@ -126,13 +127,13 @@ export function PodiumCard({ team, maxPoints, onInspect }: PodiumCardProps) {
           <div className="space-y-2">
             <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
               <span>Goal Progress</span>
-              <span>{Math.round(Math.min(100, (team.total_points / Math.max(100, maxPoints)) * 100))}%</span>
+              <span>{hasPoints ? Math.round(Math.min(100, (team.total_points / Math.max(100, maxPoints)) * 100)) : 0}%</span>
             </div>
             <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden p-0.5 border border-gray-200/50">
               <div
                 className="h-full rounded-full transition-all duration-1000 ease-out"
                 style={{
-                  width: `${Math.max(8, (team.total_points / Math.max(100, maxPoints)) * 100)}%`,
+                  width: `${hasPoints ? Math.max(8, (team.total_points / Math.max(100, maxPoints)) * 100) : 0}%`,
                   background: 'linear-gradient(90deg, #2DD4BF 0%, #818CF8 50%, #8B5CF6 100%)',
                 }}
               />
@@ -199,7 +200,7 @@ export function PodiumCard({ team, maxPoints, onInspect }: PodiumCardProps) {
         <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <div
             className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
-            style={{ width: `${Math.max(5, (team.total_points / Math.max(100, maxPoints)) * 100)}%` }}
+            style={{ width: `${hasPoints ? Math.max(5, (team.total_points / Math.max(100, maxPoints)) * 100) : 0}%` }}
           />
         </div>
         <div className="flex justify-between items-center text-[11px] text-gray-500 font-medium group-hover:text-purple-600">

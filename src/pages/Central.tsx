@@ -25,6 +25,7 @@ import { TEAMS, SPRINT_INFO, DEPARTMENT_KEY } from '../config/teams'
 import { NumberTicker } from '../components/primitives/NumberTicker'
 import { TeamDrawer } from '../components/board/TeamDrawer'
 import { TeamLogo } from '../components/media/TeamLogo'
+import { ScoringExplainer } from '../components/dashboard/ScoringExplainer'
 
 type TeamTotal = {
   team_id: string
@@ -364,6 +365,9 @@ export function Central() {
             </p>
           </div>
         </div>
+
+        {/* ── Official Scoring Rubric Explainer (from Tech Sprint PDF) ── */}
+        <ScoringExplainer />
 
         {/* ── 3. Top 3 Showcase (Authentic Teams from PDF) ── */}
         {!totalsQuery.isLoading && topThree.length >= 3 && (

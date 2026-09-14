@@ -33,6 +33,8 @@ const profiles = load('mock_profiles', [] as any[])
 let submissions = load('mock_submissions', [] as any[])
 let submission_proofs = load('mock_submission_proofs', [] as any[])
 
+export const DEMO_MODE = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === '1'
+
 // Find team ASCEND for user Yogay Jain
 const ascendTeam = TEAMS.find(t => t.name === 'ASCEND') || TEAMS[0]
 
@@ -472,6 +474,102 @@ export const supabase = {
       const sId = args?.p_submission_id
       const proofs = submission_proofs.filter((sp: any) => sp.submission_id === sId)
       return { data: proofs, error: null }
+    }
+    if (fn === 'get_central_totals') {
+      const totals = TEAMS.map(team => {
+        const subs = submissions.filter(s => s.team_id === team.id && s.status === 'verified')
+        const total_points = subs.reduce((sum, s) => sum + (s.net_points || 0), 0)
+        return {
+          team_id: team.id,
+          team_name: team.name,
+          total_points
+        }
+      }).sort((a, b) => b.total_points - a.total_points)
+      return { data: totals, error: null }
+    }
+    if (fn === 'get_activity_analytics_roster') {
+      const roster = profiles.map(p => {
+        const team = TEAMS.find(t => t.id === p.team_id)
+        return {
+          team_id: p.team_id,
+          team_name: team?.name || 'AARVAK Squad',
+          member_id: p.id,
+          member_name: p.full_name
+        }
+      })
+      return { data: roster, error: null }
+    }
+    if (fn === 'get_activity_analytics') {
+      const { p_team_id, p_member_id, p_start_date, p_end_date } = args || {}
+      let filtered = submissions.filter(s => s.status === 'verified')
+      if (p_team_id) filtered = filtered.filter(s => s.team_id === p_team_id)
+      if (p_member_id) filtered = filtered.filter(s => s.member_id === p_member_id)
+
+      const dateMap = new Map<string, { activity_date: string; activity_count: number; members: Set<string>; teams: Set<string> }>()
+      filtered.forEach(s => {
+        const d = (s.submitted_at || s.created_at || '').slice(0, 10)
+        if (!d) return
+        if (p_start_date && d < p_start_date) return
+        if (p_end_date && d > p_end_date) return
+        if (!dateMap.has(d)) {
+          dateMap.set(d, { activity_date: d, activity_count: 0, members: new Set(), teams: new Set() })
+        }
+        const item = dateMap.get(d)!
+        item.activity_count++
+        if (s.member_id) item.members.add(s.member_id)
+        if (s.team_id) item.teams.add(s.team_id)
+      })
+
+      const days = Array.from(dateMap.values()).map(item => ({
+        activity_date: item.activity_date,
+        activity_count: item.activity_count,
+        member_count: item.members.size,
+        team_count: item.teams.size
+      })).sort((a, b) => a.activity_date.localeCompare(b.activity_date))
+
+      return { data: days, error: null }
+    }
+    if (fn === 'get_chat_messages') {
+      const msgs = load('mock_chat_messages', [
+        { id: 'chat-1', author: 'AARVAK Control', body: 'Welcome to the 75-day sprint journey. Learn boldly and build together.', created_at: new Date(Date.now() - 3600000).toISOString() },
+        { id: 'chat-2', author: 'Sprint Lead', body: 'Milestone tracking and verified deliverable streams are active.', created_at: new Date(Date.now() - 1800000).toISOString() }
+      ])
+      return { data: msgs, error: null }
+    }
+    if (fn === 'send_chat_message') {
+      const msgs = load('mock_chat_messages', [
+        { id: 'chat-1', author: 'AARVAK Control', body: 'Welcome to the 75-day sprint journey. Learn boldly and build together.', created_at: new Date(Date.now() - 3600000).toISOString() },
+        { id: 'chat-2', author: 'Sprint Lead', body: 'Milestone tracking and verified deliverable streams are active.', created_at: new Date(Date.now() - 1800000).toISOString() }
+      ])
+      const newMsg = {
+        id: `chat-${Date.now()}`,
+        author: args?.p_author || 'Yogay Jain (ASCEND)',
+        body: args?.p_body || '',
+        created_at: new Date().toISOString()
+      }
+      msgs.push(newMsg)
+      save('mock_chat_messages', msgs)
+      return { data: newMsg, error: null }
+    }
+    if (fn === 'get_my_notifications') {
+      const notifs = load('mock_notifications', [
+        { id: 'notif-1', category: 'sprint_start', title: 'Sprint 2026 is officially live', body: '75 Days — 05 Teams — 01 Shared Journey. Standings and telemetry are streaming live.', href: '/', created_at: new Date().toISOString(), read_at: null },
+        { id: 'notif-2', category: 'achievement', title: 'Submit milestone deliverables', body: 'Log your technical PRs, RFC architecture docs, and benchmark proofs via the Submit page.', href: '/submit', created_at: new Date(Date.now() - 86400000).toISOString(), read_at: null }
+      ])
+      return { data: notifs, error: null }
+    }
+    if (fn === 'mark_notification_read') {
+      const notifs = load('mock_notifications', [] as any[])
+      const target = notifs.find((n: any) => n.id === args?.p_notification_id)
+      if (target) target.read_at = new Date().toISOString()
+      save('mock_notifications', notifs)
+      return { data: true, error: null }
+    }
+    if (fn === 'mark_all_notifications_read') {
+      const notifs = load('mock_notifications', [] as any[])
+      notifs.forEach((n: any) => { if (!n.read_at) n.read_at = new Date().toISOString() })
+      save('mock_notifications', notifs)
+      return { data: true, error: null }
     }
     return { data: null, error: null }
   },

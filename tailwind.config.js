@@ -20,12 +20,6 @@ export default {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
-    borderRadius: {
-      none: '0',
-      slot: '4px',
-      panel: '6px',
-      pill: '9999px',
-    },
     boxShadow: {
       none: 'none',
       // A plate catches a little light on its top edge and loses it at the base.
@@ -105,10 +99,14 @@ export default {
       },
       borderRadius: {
         none: '0px',
+        slot: '4px',
+        panel: '6px',
         xs:   '5px',
         sm:   '8px',
         md:   '11px',
         lg:   '18px', // Apple store utility card radius
+        xl:   '20px',
+        '2xl': '24px',
         pill: '9999px',
         full: '9999px',
       },

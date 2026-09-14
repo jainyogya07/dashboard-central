@@ -26,6 +26,9 @@ import { Admin } from './pages/Admin'
 import { Board } from './pages/Board'
 import { Export } from './pages/Export'
 import { RollCall } from './pages/RollCall'
+import { Analytics } from './pages/Analytics'
+import { Chat } from './pages/Chat'
+import { Notifications } from './pages/Notifications'
 import { NotFound } from './pages/Placeholders'
 import { TEAMS } from './config/teams'
 
@@ -65,9 +68,12 @@ function GlobalNav() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar">
           <Link to="/" className={getStyle('/')}>Leaderboard</Link>
           <Link to="/board" className={getStyle('/board')}>Team Board</Link>
+          <Link to="/analytics" className={getStyle('/analytics')}>Analytics</Link>
+          <Link to="/chat" className={getStyle('/chat')}>Chat</Link>
+          <Link to="/notifications" className={getStyle('/notifications')}>Inbox</Link>
           <Link to="/submit" className={getStyle('/submit')}>Submit</Link>
           <Link to="/review" className={getStyle('/review')}>Review</Link>
           <Link to="/rollcall" className={getStyle('/rollcall')}>Roll Call</Link>
@@ -99,9 +105,13 @@ export function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/onboarding" element={<RequireAuth><Onboarding /></RequireAuth>} />
               
-              {/* Public Sprint Scoreboards — Accessible immediately without login */}
+              {/* Public Sprint Scoreboards & Telemetry Surfaces */}
               <Route path="/" element={<Central />} />
+              <Route path="/central" element={<Central />} />
               <Route path="/board" element={<Board />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/notifications" element={<Notifications />} />
               
               {TEAMS.map((team) => {
                 const slug = team.name.toLowerCase().replace(' ', '-')

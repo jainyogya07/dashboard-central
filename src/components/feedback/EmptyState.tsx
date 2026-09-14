@@ -19,7 +19,7 @@ function Slot({ lit = false }: { lit?: boolean }) {
         'w-16 h-10 rounded-slot border-hair ' +
         (lit
           ? 'border-lamp/40 bg-lamp/[0.05] shadow-glow'
-          : 'border-seam bg-enamel shadow-slot shadow-lip')
+          : 'border-seam bg-enamel shadow-slot shadow-lip dark:border-white/10 dark:bg-[#181824] dark:shadow-none')
       }
     />
   )
@@ -59,7 +59,7 @@ export function ErrorState({
     <div className="flex flex-col items-center justify-center py-16 gap-5 text-center">
       <div
         aria-hidden="true"
-        className="w-16 h-10 rounded-slot border-hair border-flag/40 bg-flag/[0.05]"
+        className="w-16 h-10 rounded-slot border-hair border-flag/40 bg-flag/[0.05] dark:bg-flag/[0.1]"
       />
       <div>
         <p className="text-base text-flare font-medium">{headline}</p>

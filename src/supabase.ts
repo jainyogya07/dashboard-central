@@ -554,7 +554,7 @@ export const supabase = {
     if (fn === 'get_my_notifications') {
       const notifs = load('mock_notifications', [
         { id: 'notif-1', category: 'sprint_start', title: 'Sprint 2026 is officially live', body: '75 Days — 05 Teams — 01 Shared Journey. Standings and telemetry are streaming live.', href: '/', created_at: new Date().toISOString(), read_at: null },
-        { id: 'notif-2', category: 'achievement', title: 'Submit milestone deliverables', body: 'Log your technical PRs, RFC architecture docs, and benchmark proofs via the Submit page.', href: '/submit', created_at: new Date(Date.now() - 86400000).toISOString(), read_at: null }
+        { id: 'notif-2', category: 'achievement', title: 'Milestone activity updated', body: 'Teams are building momentum. Open the leaderboard to see the latest approved activity.', href: '/', created_at: new Date(Date.now() - 86400000).toISOString(), read_at: null }
       ])
       return { data: notifs, error: null }
     }

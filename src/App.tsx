@@ -19,13 +19,11 @@ import { Login } from './pages/Login'
 import { Onboarding } from './pages/Onboarding'
 import { Central } from './pages/Central'
 import { CentralTeam } from './pages/CentralTeam'
-import { Submit } from './pages/Submit'
 import { Profile } from './pages/Profile'
 import { Review } from './pages/Review'
 import { Admin } from './pages/Admin'
 import { Board } from './pages/Board'
 import { Export } from './pages/Export'
-import { RollCall } from './pages/RollCall'
 import { Analytics } from './pages/Analytics'
 import { Chat } from './pages/Chat'
 import { Notifications } from './pages/Notifications'
@@ -74,9 +72,7 @@ function GlobalNav() {
           <Link to="/analytics" className={getStyle('/analytics')}>Analytics</Link>
           <Link to="/chat" className={getStyle('/chat')}>Chat</Link>
           <Link to="/notifications" className={getStyle('/notifications')}>Inbox</Link>
-          <Link to="/submit" className={getStyle('/submit')}>Submit</Link>
           <Link to="/review" className={getStyle('/review')}>Review</Link>
-          <Link to="/rollcall" className={getStyle('/rollcall')}>Roll Call</Link>
           <Link to="/admin" className={getStyle('/admin')}>Admin</Link>
         </div>
 
@@ -124,10 +120,7 @@ export function App() {
                 )
               })}
 
-              {/* Protected Engineering Actions — Require Authentication */}
-              <Route path="/submit" element={<RequireProfile><Submit /></RequireProfile>} />
               <Route path="/profile" element={<RequireProfile><Profile /></RequireProfile>} />
-              <Route path="/rollcall" element={<RequireProfile><RollCall /></RequireProfile>} />
 
               {/* Lead & Core Role Routes */}
               <Route path="/review" element={<RequireRole minRole="core"><Review /></RequireRole>} />

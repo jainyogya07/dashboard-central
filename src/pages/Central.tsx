@@ -818,19 +818,6 @@ export function Central() {
                 </div>
               </div>
 
-              {/* Bottom Info CTA */}
-              <div className={`mt-4 pt-3 border-t flex items-center justify-between ${
-                isDark ? 'border-white/10' : 'border-[#e0e0e0]'
-              }`}>
-                <span className={`text-xs ${isDark ? 'text-[#a1a1aa]' : 'text-[#7a7a7a]'}`}>Got deliverables?</span>
-                <button
-                  type="button"
-                  onClick={() => navigate('/submit')}
-                  className="apple-link text-xs font-medium cursor-pointer"
-                >
-                  Log Submission →
-                </button>
-              </div>
             </div>
           </div>
 

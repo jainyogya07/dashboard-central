@@ -8,15 +8,15 @@ export function ReadinessPanel({ demo, unavailable = false }: { demo: boolean; u
     }`}>
       {ready ? <CheckCircle2 className="mt-0.5 shrink-0 text-posted" size={18} aria-hidden="true" /> : <AlertTriangle className="mt-0.5 shrink-0 text-amber" size={18} aria-hidden="true" />}
       <div>
-        <p className="label text-chalk">{ready ? 'Live data connected' : demo ? 'Preview data active' : 'Live data not ready'}</p>
-        <p className="mt-1 text-sm text-muted">
+        <p className="label text-chalk dark:text-emerald-400">{ready ? 'Live data connected' : demo ? 'Preview data active' : 'Live data not ready'}</p>
+          <p className="mt-1 text-sm text-muted dark:text-white/60">
           {ready
             ? 'Standings and approved activity are being read from Supabase.'
             : demo
               ? 'This view is safe demo data. Connect Supabase and deploy the dashboard RPCs for live results.'
               : 'Supabase responded, but the required dashboard RPC is not deployed in this project yet.'}
         </p>
-        <p className="mt-2 text-[11px] uppercase tracking-wider text-dim">Last sync: {demo ? 'preview generated now' : ready ? 'just now' : 'waiting for deployment'}</p>
+        <p className="mt-2 text-[11px] uppercase tracking-wider text-dim dark:text-white/50">Last sync: {demo ? 'preview generated now' : ready ? 'just now' : 'waiting for deployment'}</p>
       </div>
     </div>
   )

@@ -105,7 +105,7 @@ export function Notifications() {
           <div className="flex flex-col">
             {notifications.map((notification: Notification) => (
               <div key={notification.id}>
-                <div className={`px-panel py-4 flex gap-3 ${notification.read_at ? '' : 'bg-lit'}`}>
+                <div className={`m-2 flex gap-3 rounded-slot border border-seam dark:border-white/10 p-4 sm:p-5 ${notification.read_at ? 'bg-enamel dark:bg-[#121218]/70' : 'bg-lit dark:bg-[#181824]'}`}>
                   <Bell className="text-lamp shrink-0 mt-0.5" size={18} aria-hidden="true" />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-3">

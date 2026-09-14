@@ -5,7 +5,6 @@ import {
   Trophy, 
   Calendar, 
   Clock, 
-  PlusCircle, 
   Search, 
   Sparkles, 
   Layers, 
@@ -523,13 +522,6 @@ export function Board({ hardcodedTeamId }: { hardcodedTeamId?: string }) {
               </div>
             </div>
 
-            <button
-              onClick={() => navigate('/submit')}
-              className="apple-btn-primary py-2 px-4 text-xs font-semibold shrink-0 cursor-pointer"
-            >
-              <PlusCircle className="w-4 h-4 mr-1.5" />
-              <span>Log Deliverable</span>
-            </button>
           </div>
         </div>
 
@@ -1020,15 +1012,6 @@ export function Board({ hardcodedTeamId }: { hardcodedTeamId?: string }) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  onClick={() => navigate('/submit')}
-                  className="apple-btn-primary py-2 px-3.5 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
-                >
-                  <PlusCircle className="w-3.5 h-3.5" />
-                  <span>Submit New Proof</span>
-                </button>
-              </div>
             </div>
 
             {/* ── THE "BADHIYA SEARCH BAR" & ADVANCED FILTERS ── */}

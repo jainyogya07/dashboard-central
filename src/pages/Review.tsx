@@ -231,11 +231,6 @@ export function Review() {
           <span className="tabular-nums text-chalk">{sentBackCount}</span> sent back
         </span>
         <TextButton
-          onClick={() => navigate('/booth/meetups')}
-        >
-          Roll call
-        </TextButton>
-        <TextButton
           onClick={() => navigate('/')}
         >
           Back to the board

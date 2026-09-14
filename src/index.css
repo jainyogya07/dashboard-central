@@ -321,7 +321,11 @@
 
 /* ── TAVISHI DASHBOARD & SCORING SURFACES ── */
 .score-explainer {
-  @apply overflow-hidden rounded-2xl border transition-all;
+  overflow: hidden;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  transition: all 0.2s ease;
 }
 .dark .score-explainer {
   background: rgba(18, 18, 28, 0.95);
@@ -334,28 +338,63 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 .score-explainer__toggle {
-  @apply flex w-full items-start justify-between gap-4 p-4 text-left transition-colors sm:p-5 cursor-pointer;
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+@media (min-width: 480px) {
+  .score-explainer__toggle {
+    padding: 1.25rem;
+  }
 }
 .dark .score-explainer__toggle:hover { background: rgba(255, 255, 255, 0.04); }
 .light .score-explainer__toggle:hover { background: #fafafc; }
 
 .score-explainer__body {
-  @apply border-t px-4 pb-5 pt-4 sm:px-5;
+  border-top-width: 1px;
+  border-top-style: solid;
+  padding: 1rem 1rem 1.25rem 1rem;
+}
+@media (min-width: 480px) {
+  .score-explainer__body {
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+  }
 }
 .dark .score-explainer__body { border-color: rgba(255, 255, 255, 0.08); }
 .light .score-explainer__body { border-color: #f0f0f0; }
 
 .score-table {
-  @apply w-full min-w-[620px] border-collapse text-left text-xs;
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.75rem;
 }
 .score-table th {
-  @apply border-b px-3 py-2 font-mono text-[10px] uppercase tracking-wider;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding: 0.5rem 0.75rem;
+  font-family: "SF Mono", "Martian Mono", ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 .dark .score-table th { border-color: rgba(255, 255, 255, 0.1); color: #a1a1aa; }
 .light .score-table th { border-color: #e0e0e0; color: #7a7a7a; }
 
 .score-table td {
-  @apply border-b px-3 py-2.5 align-top leading-5 text-xs;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding: 0.625rem 0.75rem;
+  vertical-align: top;
+  line-height: 1.25rem;
+  font-size: 0.75rem;
 }
 .dark .score-table td { border-color: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.85); }
 .light .score-table td { border-color: #f0f0f0; color: #1d1d1f; }
@@ -364,17 +403,23 @@
 .light .score-table tbody tr:hover { background: #fafafc; }
 
 .score-table__points {
-  @apply whitespace-nowrap font-mono font-bold text-[#0071e3];
+  white-space: nowrap;
+  font-family: "SF Mono", "Martian Mono", ui-monospace, monospace;
+  font-weight: 700;
+  color: #0071e3;
 }
 .score-table--compact {
-  @apply min-w-[440px];
+  min-width: 440px;
 }
 
 .readiness-panel {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 .readability-strip {
-  @apply rounded-xl border px-3 py-2;
+  border-radius: 0.75rem;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.5rem 0.75rem;
 }
 .dark .readability-strip { background: rgba(18, 18, 28, 0.8); border-color: rgba(255, 255, 255, 0.1); }
 .light .readability-strip { background: #ffffff; border-color: #e0e0e0; }
